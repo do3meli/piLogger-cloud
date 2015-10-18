@@ -18,5 +18,10 @@
         "datastax/php-driver": "dev-master",
         "nesbot/carbon": "dev-master"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "piLoggerCloud": "lib/"
+        }
+    }
 }

@@ -24,7 +24,7 @@ $mysqldb = new PDO('mysql:dbname='.$config['database'].';host='.$config['hostnam
 $mysqldb->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 // create the picloud handler and set the db's
-$picloud = new piCloudFunctions\piCloudHandler();
+$picloud = new piLoggerCloud\piCloudHandler();
 $picloud->setCassandraConnection($cassandradb);
 $picloud->setMysqlConnection($mysqldb);
 
