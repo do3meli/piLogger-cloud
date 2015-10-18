@@ -1,0 +1,22 @@
+{
+    "name": "do3meli/pilogger-cloud",
+    "description": "Cloud based application that stores sensor data and represents it in graphs",
+    "type": "project",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "do3meli",
+            "email": "dominic.schlegel@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^2.6",
+        "dogancelik/slim-json": "dev-master",
+        "twig/twig": "1.*",
+        "slim/views": "dev-master",
+        "jeremykendall/slim-auth": "dev-master",
+        "datastax/php-driver": "dev-master",
+        "nesbot/carbon": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
