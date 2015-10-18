@@ -1,6 +1,9 @@
 # do not commit composer vendor directory
 vendor/*
 
+# ignore composer.lock file
+composer.lock
+
 # ignore the config file
 config/config.ini
 
