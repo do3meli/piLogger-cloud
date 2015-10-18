@@ -1,0 +1,100 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+   <div class="col-lg-12">
+      <h1 class="page-header">Welcome</h1>
+   </div>
+</div>
+
+
+<div class="row">
+
+   <div class="col-lg-7">
+      <div class="panel panel-default">
+         <div class="panel-heading"> What is this page about? </div>
+         <div class="panel-body">
+            <p> This cloud based portal has been written during my bachelor thesis 
+                and acts as a proof of concept for a scalable web application architecture that
+                stores and displays measured sensor data.
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-5">
+      <div class="panel panel-default">
+         <div class="panel-heading"> the very special piLogger Cloud logo</div>   
+         <div class="panel-body text-center">
+            <img src="/img/piLogger-Cloud-Logo.png" width=100%">  
+         </div>
+      </div>
+   </div>
+
+</div>
+
+<div class="row">
+
+   <div class="col-lg-7">
+      <div class="panel panel-default">
+         <div class="panel-heading"> Contact </div>
+         <div class="panel-body">
+            <p> You are interested in using this platform or you have some improvement ideas or questions?
+                Dont hesitate to get in touch with me for more details. Just send me a mail to below 
+                address and i will try to answert it as soon as possible.
+            </p>
+            
+            <div class="list-group">
+             
+               <div class="list-group-item">
+                  <i class="fa fa-user fa-fw"></i> Name
+                  <span class="pull-right text-muted small"><em>Dominic Schlegel</em></span>
+               </div>
+
+               <a href="mailto:dominic.schlegel@gmail.com" class="list-group-item">
+                  <i class="fa fa-envelope fa-fw"></i> Mail
+                  <span class="pull-right text-muted small"><em>dominic.schlegel@gmail.com</em></span> 
+               </a>
+
+            </div>
+
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-5">
+      <div class="panel panel-default">
+         <div class="panel-heading"> Source Code </div>
+         <div class="panel-body">
+
+            <div class="list-group">
+
+               <a href="https://github.com/do3meli/piLogger-cloud-frontend" class="list-group-item">
+                  <i class="fa fa-github fa-fw"></i>Web Frontend
+                  <span class="pull-right text-muted small"><em>piLogger-cloud-frontend</em></span>
+               </a>
+
+               <a href="https://github.com/do3meli/piLogger-cloud-rest" class="list-group-item">
+                  <i class="fa fa-github fa-fw"></i>REST API
+                  <span class="pull-right text-muted small"><em>piLogger-cloud-rest</em></span>
+               </a>
+
+               <a href="https://github.com/do3meli/piLogger-cloud-functions" class="list-group-item">
+                  <i class="fa fa-github fa-fw"></i>Core Functions
+                  <span class="pull-right text-muted small"><em>piLogger-cloud-functions</em></span>
+               </a>
+
+               <a href="https://github.com/maglub/piLogger" class="list-group-item">
+                  <i class="fa fa-github fa-fw"></i>piLogger Client
+                  <span class="pull-right text-muted small"><em>piLogger</em></span>
+               </a>
+
+            </div>
+
+         </div>
+      </div>
+   </div>
+
+</div>
+
+{% endblock %}

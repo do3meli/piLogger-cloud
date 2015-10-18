@@ -1,0 +1,45 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+   <div class="col-lg-12">
+      <h1 class="page-header">Dashboards</h1>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg-8">
+      
+      
+      <div class="panel panel-default">
+         <div class="panel-heading"> All configured Dashboards in the piLogger Cloud </div>
+         
+         <div class="panel-body">
+          <div class="table-responsive"> 
+            <table class="table table-condensed table-hover">
+               <thead>
+                  <tr>
+                     <th>Name</th>
+                     <th>Owner</th>
+                     <th># assigned Graphs</th>
+                  </tr>
+               </thead>
+               <tbody>
+         
+                  {% for dashboard in dashboards %}
+                     <tr>
+                        <td><a href="/dashboards/{{ dashboard.name }}">{{ dashboard.name }}</td>
+                        <td><a href="/users/{{ dashboard.username }}">{{ dashboard.username }}</td>
+                        <td>{{ dashboard.assignedGraphs }}</td>
+                     </tr>
+                  {% endfor %}
+         
+               </tbody>
+            </table>
+      
+          </div> 
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

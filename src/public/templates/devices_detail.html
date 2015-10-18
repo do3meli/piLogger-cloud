@@ -1,0 +1,76 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+   <div class="col-lg-12">
+      <h1 class="page-header">Device information for {{ device.name }}</h1>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg-6">
+      <div class="panel panel-default">
+   
+         <div class="panel-heading">
+            <i class="fa fa-laptop fa-fw"></i> Device Information
+         </div>
+   
+         <div class="panel-body">
+   
+            <div class="list-group">
+               <div class="list-group-item">
+                  <i class="fa fa-angle-right fa-fw"></i> Name
+                  <span class="pull-right text-muted small"><em>{{ device.name }}</em></span>
+               </div>
+   
+               <div class="list-group-item">
+                  <i class="fa fa-angle-right fa-fw"></i> Identifier
+                  <span class="pull-right text-muted small"><em>{{ device.identifier }}</em></span>
+               </div>
+   
+               <a href="/users/{{ device.username }}" class="list-group-item">
+                  <i class="fa fa-user fa-fw"></i> Owner
+                  <span class="pull-right text-muted small"><em>{{ device.username }}</em></span>
+               </a>
+   
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-6">
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <i class="fa fa-hdd-o fa-fw"></i> Sensors connected to {{ device.name }}
+         </div>
+         
+         <div class="panel-body">
+          <div class="table-responsive">            
+            <table class="table table-condensed table-hover"> 
+               <thead>
+                  <tr>
+                     <th>Identifier</th>
+                     <th>Name</th>
+                     <th>Type</th>
+                  </tr>
+               </thead>
+               <tbody>
+         
+                  {% for item in sensor %}
+                     <tr>
+                        <td><a href="/sensors/{{ item.identifier }}">{{ item.identifier }}</a></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.type }}</td>
+                     </tr>
+                  {% endfor %}
+         
+               </tbody>
+            </table>
+      
+          </div> 
+         </div>
+      </div>  
+   </div>
+</div>
+{% endblock %}
+

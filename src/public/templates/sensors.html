@@ -1,0 +1,49 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+
+   <div class="col-lg-12">
+      <h1 class="page-header">Sensors</h1>
+   </div>
+
+</div>
+
+<div class="row">
+   <div class="col-lg-8">
+      
+      
+      <div class="panel panel-default">
+         <div class="panel-heading"> List of all Sensors that sending data to the piLogger Cloud</div>
+         
+         <div class="panel-body">
+          <div class="table-responsive">            
+            <table class="table table-condensed table-hover"> 
+               <thead>
+                  <tr>
+                     <th>Identifier</th>
+                     <th>Name</th>
+                     <th>Type</th>
+                     <th>Attached to Device</th>
+                  </tr>
+               </thead>
+               <tbody>
+         
+                  {% for sensor in sensors %}
+                     <tr>
+                        <td><a href="/sensors/{{ sensor.identifier }}">{{ sensor.identifier }}</a></td>
+                        <td>{{ sensor.name }}</td>
+                        <td>{{ sensor.type }}</td>
+                        <td><a href="/devices/{{ sensor.devIdent }}">{{ sensor.deviceName }}</a></td>
+                     </tr>
+                  {% endfor %}
+         
+               </tbody>
+            </table>
+      
+          </div> 
+         </div>
+      </div>  
+   </div>
+</div>
+{% endblock %}

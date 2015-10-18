@@ -1,0 +1,46 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+   <div class="col-lg-12">
+      <h1 class="page-header">Graphs</h1>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg-8">
+      
+      
+      <div class="panel panel-default">
+         <div class="panel-heading"> All Graphs that are configured in the piLogger Cloud </div>
+         
+         <div class="panel-body">
+          <div class="table-responsive">
+      
+            <table class="table table-condensed table-hover">
+               <thead>
+                  <tr>
+                     <th>GID</th>
+                     <th>Name</th>
+                     <th>Data since X days</th>
+                  </tr>
+               </thead>
+               <tbody>
+         
+                  {% for graph in graphs %}
+                     <tr>
+                        <td><a href="/graphs/{{ graph.gid }}">{{ graph.gid }}</td>
+                        <td>{{ graph.name }}</td>
+                        <td>{{ graph.dataSinceDays }}</td>
+                     </tr>
+                  {% endfor %}
+         
+               </tbody>
+            </table>
+      
+          </div> 
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

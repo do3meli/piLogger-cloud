@@ -1,0 +1,92 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+   <div class="col-lg-12">
+      <h1 class="page-header">Sensor information for {{ sensor.name }}</h1>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-lg-5">
+      <div class="panel panel-default">
+   
+         <div class="panel-heading">
+            <i class="fa fa-laptop fa-fw"></i> Sensor Information
+         </div>
+   
+   
+         <div class="panel-body">
+   
+            <div class="list-group">
+               <div class="list-group-item">
+                  <i class="fa fa-angle-right fa-fw"></i> Name
+                  <span class="pull-right text-muted small"><em>{{ sensor.name }}</em></span>
+               </div>
+   
+               <div class="list-group-item">
+                  <i class="fa fa-angle-right fa-fw"></i> Type
+                  <span class="pull-right text-muted small"><em>{{ sensor.type }}</em></span>
+               </div>
+   
+   
+               <div class="list-group-item">
+                  <i class="fa fa-angle-right fa-fw"></i> Identifier
+                  <span class="pull-right text-muted small"><em>{{ sensor.identifier }}</em></span>
+               </div>
+   
+               <a href="/users/{{ sensor.username }}" class="list-group-item">
+                  <i class="fa fa-user fa-fw"></i> Owner
+                  <span class="pull-right text-muted small"><em>{{ sensor.username }}</em></span>
+               </a>
+   
+               <a href="/devices/{{ sensor.deviceIdent }}" class="list-group-item">
+                  <i class="fa fa-laptop fa-fw"></i> Attached to Device
+                  <span class="pull-right text-muted small"><em>{{ sensor.deviceName }}</em></span>
+               </a>
+   
+   
+            </div>
+         </div>
+      </div>
+   </div>
+   
+      <div class="col-lg-6">
+      <div class="panel panel-default">
+         <div class="panel-heading">
+            <i class="fa fa-area-chart fa-fw"></i> Graphs containing {{ sensor.name }}
+         </div>
+         
+         <div class="panel-body">
+          <div class="table-responsive">            
+            <table class="table table-condensed table-hover"> 
+               <thead>
+                  <tr>
+                     <th>GID</th>
+                     <th>Name</th>
+                     <th>Data since X days</th>
+                  </tr>
+               </thead>
+               <tbody>
+         
+                  {% for item in graphs %}
+                     <tr>
+                        <td><a href="/graphs/{{ item.gid }}">{{ item.gid }}</a></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.sinceDays }}</td>
+                     </tr>
+                  {% endfor %}
+         
+               </tbody>
+            </table>
+      
+          </div> 
+         </div>
+      </div>  
+   </div>
+
+   
+</div>
+
+{% endblock %}
+

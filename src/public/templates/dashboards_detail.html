@@ -1,0 +1,30 @@
+{% extends "_layout.html" %}
+
+{% block div %}
+<div class="row">
+   <div class="col-lg-12">
+      <h1 class="page-header">Dashboard {{ dashboard }}</h1>
+   </div>
+</div>
+
+
+{% for graph in graphs %}
+<div class="row">
+   <div class="col-lg-12">
+      <div class="panel panel-default">
+         <div class="panel-heading">Graph {{ graph.name }} showing last {{ graph.sinceHours }} hours</div>
+         <div class="panel-body"><div id="{{ graph.name }}"></div></div>
+      </div>
+   </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+
+
+{% block myjavascript %}
+      <script src="../js/piCloudGraphs.js" type="text/javascript"></script>
+      {% for graph in graphs %}
+         <script type="text/javascript"> generateGraph('{{ graph.name }}'); </script>
+      {% endfor %}
+{% endblock %}
