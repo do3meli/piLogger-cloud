@@ -28,7 +28,7 @@ $picloud->setMysqlConnection($mysqldb);
 
 // create new slim app object
 $app = new \Slim\Slim(array(
-   'templates.path' => '../public/templates',
+   'templates.path' => '../../public/templates',
    'picloud' => $picloud,
 ));
 
