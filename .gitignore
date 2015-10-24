@@ -5,7 +5,7 @@ vendor/*
 composer.lock
 
 # ignore twig template cache files
-public/templates/cache
+templates/cache
 
 # ignore the config file
 config/config.ini

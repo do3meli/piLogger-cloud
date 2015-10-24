@@ -28,7 +28,7 @@ $picloud->setMysqlConnection($mysqldb);
 
 // create new slim app object
 $app = new \Slim\Slim(array(
-   'templates.path' => '../../public/templates',
+   'templates.path' => '../../templates',
    'picloud' => $picloud,
 ));
 
@@ -38,7 +38,7 @@ $app->view(new \Slim\Views\Twig());
 // configure Twig template engine
 $app->view->parserOptions = array(
    'charset' => 'utf-8',
-   'cache' => realpath('../public/templates/cache'),
+   'cache' => realpath('../../templates/cache'),
    'auto_reload' => true,
    'strict_variables' => false,
    'autoescape' => true
