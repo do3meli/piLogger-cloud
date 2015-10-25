@@ -23,7 +23,7 @@ The following other projects or libraries were used:
 * [Slim-Views](https://github.com/slimphp/Slim-Views) Plugin for Slim Framwork for simpler usage of the Twig template engine
 * [Slim-Json](https://github.com/dogancelik/slim-json) JSON middleware for Slim PHP framework
 * [Silm-Auth](https://github.com/jeremykendall/slim-auth) Authorization and authentication for the Slim Framework
-* [Datastax-PHP-Driver](http://datastax.github.io/php-driver/) A modern, feature-rich and highly tunable PHP client library for Apache Cassandra
+* [Datastax-PHP-Driver](http://datastax.github.io/php-driver/) A modern and feature-rich PHP client library for  Cassandra
 * [Twig](http://twig.sensiolabs.org) a template engine for PHP
 * [Carbon](http://carbon.nesbot.com) simple PHP API extension for DateTime
 
