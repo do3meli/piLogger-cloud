@@ -44,7 +44,7 @@ $app->add(new \SlimJson\Middleware());
 //***************************************************************
 
 // HTTP PUT route for saving new data points
-$app->put('/api/sensor/:id', function ($id) use ($app) {
+$app->put('/sensor/:id', function ($id) use ($app) {
 	
 	//parse the request body as json object
 	$json = $app->request()->getBody();
@@ -72,7 +72,7 @@ $app->put('/api/sensor/:id', function ($id) use ($app) {
 //***************************************************************
 // POST route for /api/sensor/:id
 //***************************************************************
-$app->post('/api/sensor/:id', function ($id) use ($app) {
+$app->post('/sensor/:id', function ($id) use ($app) {
 
    //parse the request body as json object
 	$json = $app->request()->getBody();
@@ -96,7 +96,7 @@ $app->post('/api/sensor/:id', function ($id) use ($app) {
 //***************************************************************
 // POST route for /api/device/:id
 //***************************************************************
-$app->post('/api/device/:id', function ($id) use ($app) {
+$app->post('/device/:id', function ($id) use ($app) {
 
    //parse the request body as json object
 	$json = $app->request()->getBody();
@@ -121,7 +121,7 @@ $app->post('/api/device/:id', function ($id) use ($app) {
 // GET route for /api/sensor/:id/:year
 //***************************************************************
 
-$app->get('/api/sensor/:id/:year', function ($id, $year) use ($app) {
+$app->get('/sensor/:id/:year', function ($id, $year) use ($app) {
 	$app->render(200,$app->config('picloud')->getDataBySensorYear($id,$year));
 });
 
@@ -129,7 +129,7 @@ $app->get('/api/sensor/:id/:year', function ($id, $year) use ($app) {
 // GET route for /api/sensor/:id/:year/:month
 //***************************************************************
 
-$app->get('/api/sensor/:id/:year/:month', function ($id, $year, $month) use ($app) {
+$app->get('/sensor/:id/:year/:month', function ($id, $year, $month) use ($app) {
 	$app->render(200,$app->config('picloud')->getDataBySensorMonth($id,$year,$month));
 });
 
@@ -137,7 +137,7 @@ $app->get('/api/sensor/:id/:year/:month', function ($id, $year, $month) use ($ap
 // GET route for /api/sensor/:id/:year/:month/:day
 //***************************************************************
 
-$app->get('/api/sensor/:id/:year/:month/:day', function ($id, $year, $month, $day) use ($app) {
+$app->get('/sensor/:id/:year/:month/:day', function ($id, $year, $month, $day) use ($app) {
 	$app->render(200,$app->config('picloud')->getDataBySensorDay($id,$year,$month, $day));
 });
 
@@ -145,7 +145,7 @@ $app->get('/api/sensor/:id/:year/:month/:day', function ($id, $year, $month, $da
 // GET route for /api/plotdata/:name
 //***************************************************************
 
-$app->get('/api/plotdata/:name', function ($name) use ($app) {
+$app->get('/plotdata/:name', function ($name) use ($app) {
     $app->render(200,$app->config('picloud')->getDataByGraphName($name));
 });	
 
