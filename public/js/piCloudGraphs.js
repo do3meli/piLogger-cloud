@@ -6,7 +6,7 @@ function generateGraph(graphname){
    // do ajax request and call draw_chart function if successfull
    // if not successfull we show an alert
    $.ajax({
-      url: "http://api.pilogger.net/api/plotdata/"+graphname,
+      url: "http://"+window.location.host+"/api/plotdata/"+graphname,
       type: 'GET',
       cache: false,
       dataType: "json",
