@@ -22,7 +22,9 @@
         "slim/views": "dev-master",
         "jeremykendall/slim-auth": "dev-fix-PDO-identity",
         "datastax/php-driver": "dev-master",
-        "nesbot/carbon": "dev-master"
+        "nesbot/carbon": "dev-master",
+        "monolog/monolog": "^1.16@dev",
+        "flynsarmy/slim-monolog": "dev-master"
     },
     "minimum-stability": "dev",
     "autoload": {
