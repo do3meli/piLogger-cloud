@@ -26,4 +26,5 @@ The following other projects or libraries were used:
 * [Datastax-PHP-Driver](http://datastax.github.io/php-driver/) A modern and feature-rich PHP client library for  Cassandra
 * [Twig](http://twig.sensiolabs.org) a template engine for PHP
 * [Carbon](http://carbon.nesbot.com) simple PHP API extension for DateTime
-
+* [Monolog](https://github.com/Seldaek/monolog) logging framework for PHP
+* [Slim-Monolog](https://github.com/Flynsarmy/Slim-Monolog) Monolog logging support for Slim Framework
