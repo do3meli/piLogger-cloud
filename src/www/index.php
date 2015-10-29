@@ -21,6 +21,21 @@ $mysqldb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 $picloud = new piLoggerCloud\piCloudHandler();
 $picloud->setMysqlConnection($mysqldb);
 
+// create monolog handler array
+$monologHandlers = array();
+
+// add monolog slack handler if the config has been enabled 
+if(!empty($config['slack-enable'])){
+    $slackHandler = new \Monolog\Handler\SlackHandler($config['slack-token'], $config['slack-channel'], 'piLogger-cloud:'.$config['env']);
+    $slackHandler->setLevel(\Monolog\Logger::INFO);
+    array_push($monologHandlers, $slackHandler);
+}
+
+// integrate monolog into Slim via SlimMonolog package
+$logger = new \Flynsarmy\SlimMonolog\Log\MonologWriter(array(
+    'handlers' => $monologHandlers
+));
+
 
 //***************************************************************
 // Slim Framework: Setup
@@ -30,6 +45,8 @@ $picloud->setMysqlConnection($mysqldb);
 $app = new \Slim\Slim(array(
    'templates.path' => '../../templates',
    'picloud' => $picloud,
+   'log.writer' => $logger,
+   'log.level' => \Slim\Log::INFO,
 ));
 
 // define the engine used for the view
@@ -159,10 +176,12 @@ $app->map('/login', function () use ($app) {
         $password = $app->request->post('password');
         $result = $app->authenticator->authenticate($username, $password);
         if ($result->isValid()) {
+            $app->log->info('user '.$username.' successfully logged in');
             $app->redirect('/');
         } else {
             $messages = $result->getMessages();
             $app->flashNow('error', $messages[0]);
+            $app->log->info('user '.$username.' failed to log in');
         }
     }
     $app->render('login.html', array('username' => $username));
@@ -175,8 +194,10 @@ $app->map('/register', function () use ($app) {
        $result = $app->config('picloud')->createNewUser($username,$password);
        if($result){
          $app->flashNow('success', 'Account successfully created');
+         $app->log->info('successfully created new account for '.$username);
        }else{
          $app->flashNow('error', 'Error - Could not create your account'); 
+         $app->log->error('failed to register a new account');
        }
     }
     $app->render('register.html');
