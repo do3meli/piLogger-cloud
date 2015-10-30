@@ -40,7 +40,7 @@ if(!empty($config['slack-enable'])){
 
 // create cassandra monolog handler and add it to the handler stack
 $cassandraHandler = new \CassandraHandler\CassandraHandler($cassandradb);
-array_pad($monologHandlers, $cassandraHandler);
+array_push($monologHandlers, $cassandraHandler);
 
 // integrate monolog into Slim via SlimMonolog package
 $logger = new \Flynsarmy\SlimMonolog\Log\MonologWriter(array(
