@@ -44,6 +44,7 @@ array_push($monologHandlers, $cassandraHandler);
 
 // integrate monolog into Slim via SlimMonolog package
 $logger = new \Flynsarmy\SlimMonolog\Log\MonologWriter(array(
+    'name' => 'www',
     'handlers' => $monologHandlers
 ));
 
