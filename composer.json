@@ -24,7 +24,8 @@
         "datastax/php-driver": "dev-master",
         "nesbot/carbon": "dev-master",
         "monolog/monolog": "^1.16@dev",
-        "flynsarmy/slim-monolog": "dev-master"
+        "flynsarmy/slim-monolog": "dev-master",
+        "do3meli/monolog-cassandra": "dev-master"
     },
     "minimum-stability": "dev",
     "autoload": {
