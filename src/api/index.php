@@ -28,13 +28,37 @@ $picloud = new piLoggerCloud\piCloudHandler();
 $picloud->setCassandraConnection($cassandradb);
 $picloud->setMysqlConnection($mysqldb);
 
+// create monolog handler array
+$monologHandlers = array();
+
+// add monolog slack handler if the config has been enabled 
+if(!empty($config['slack-enable'])){
+    $slackHandler = new \Monolog\Handler\SlackHandler($config['slack-token'], $config['slack-channel'], 'piLogger-cloud:'.$config['env']);
+    $slackHandler->setLevel(\Monolog\Logger::INFO);
+    array_push($monologHandlers, $slackHandler);
+}
+
+// create cassandra monolog handler and add it to the handler stack
+$cassandraHandler = new \CassandraHandler\CassandraHandler($cassandradb);
+array_push($monologHandlers, $cassandraHandler);
+
+// integrate monolog into Slim via SlimMonolog package
+$logger = new \Flynsarmy\SlimMonolog\Log\MonologWriter(array(
+    'name' => 'api',
+    'handlers' => $monologHandlers
+));
+
 
 //***************************************************************
 // Slim Framework: Setup
 //***************************************************************
 
 // create new slim app and pass picloud object
-$app = new \Slim\Slim(array('picloud' => $picloud));
+$app = new \Slim\Slim(array(
+    'picloud' => $picloud,
+    'log.writer' => $logger,
+    'log.level' => \Slim\Log::INFO,
+));
 
 // using json middleware
 $app->add(new \SlimJson\Middleware());
@@ -84,12 +108,14 @@ $app->post('/sensor/:id', function ($id) use ($app) {
 	// if return is true then everything was successfull, 
 	// otherwise send an HTTP error code
 	if($returnValue){
-   	$app->render(201);
+        $app->log->info('successfully created new sensor with ID '.$id);
+        $app->render(201);
 	}else{
-   	$app->render(500, array(
-         'error' => TRUE,
-         'msg'   => 'could not generate a new sensor...',
-   	));
+        $app->log->error('could not create new sensor with ID '.$id);
+        $app->render(500, array(
+            'error' => TRUE,
+            'msg'   => 'could not generate a new sensor...',
+        ));
 	}
 });
 
@@ -108,12 +134,14 @@ $app->post('/device/:id', function ($id) use ($app) {
 	// if return is true then everything was successfull, 
 	// otherwise send an HTTP error code
 	if($returnValue){
-   	$app->render(201);
+        $app->log->info('successfully created new device with name '.$data['deviceName']);
+        $app->render(201);
 	}else{
-   	$app->render(500, array(
-         'error' => TRUE,
-         'msg'   => 'could not generate a new device...',
-   	));
+    	$app->log->error('could not create new device with name '.$data['deviceName']);
+    	$app->render(500, array(
+            'error' => TRUE,
+            'msg'   => 'could not generate a new device...',
+        ));
 	}
 });
 
