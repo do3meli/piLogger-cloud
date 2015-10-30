@@ -10,6 +10,13 @@ require '../../vendor/autoload.php';
 // parse the config file
 $config = parse_ini_file("../../config/config.ini");
 
+// create the cassandra database
+$cassandradb   = Cassandra::cluster()
+                    ->withContactPoints(implode(', ',$config['contactpoint']))
+                    ->withPort((int)$config['portnumb'])
+                    ->build()
+                    ->connect($config['keyspace']);
+
 // create mysql connection
 $mysqldb = new PDO('mysql:dbname='.$config['database'].';host='.$config['hostname'].';charset=utf8', $config['username'] , $config['password']);
 
@@ -30,6 +37,10 @@ if(!empty($config['slack-enable'])){
     $slackHandler->setLevel(\Monolog\Logger::INFO);
     array_push($monologHandlers, $slackHandler);
 }
+
+// create cassandra monolog handler and add it to the handler stack
+$cassandraHandler = new \CassandraHandler\CassandraHandler($cassandradb);
+array_pad($monologHandlers, $cassandraHandler);
 
 // integrate monolog into Slim via SlimMonolog package
 $logger = new \Flynsarmy\SlimMonolog\Log\MonologWriter(array(
