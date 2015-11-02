@@ -23,6 +23,7 @@
                      <th>GID</th>
                      <th>Name</th>
                      <th>Data since X days</th>
+                     <th>Owner</th>
                   </tr>
                </thead>
                <tbody>
@@ -32,6 +33,7 @@
                         <td><a href="/graphs/{{ graph.gid }}">{{ graph.gid }}</td>
                         <td>{{ graph.name }}</td>
                         <td>{{ graph.dataSinceDays }}</td>
+                        <td><a href="/users/{{ graph.username }}">{{ graph.username }}</a></td>
                      </tr>
                   {% endfor %}
          

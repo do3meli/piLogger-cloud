@@ -298,7 +298,8 @@ class piCloudHandler {
    function getAllGraphs(){
      
       // prepare SQL statement, execute it, fetch results into an array and return that
-      $stmt = $this->mysqlConnection->prepare('SELECT gid, name, dataSinceDays FROM graph');
+      $stmt = $this->mysqlConnection->prepare('SELECT g.gid, g.name, g.dataSinceDays, u.username 
+                                                FROM graph g JOIN user u ON (g.owner = u.uid)');
       $stmt->execute();
       $result = $stmt->fetchAll();	
       return $result;
