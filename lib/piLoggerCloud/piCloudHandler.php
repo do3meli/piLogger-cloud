@@ -264,7 +264,7 @@ class piCloudHandler {
                                                    (SELECT COUNT(*) FROM device d WHERE d.owner=u.uid) AS deviceCount,
                                                    (SELECT COUNT(*) FROM sensor s join device d on (s.attached = d.did) WHERE d.owner=u.uid) AS sensorCount,
                                                    (SELECT COUNT(*) FROM cockpitview v where v.owner=u.uid) AS viewCount,
-                                                   (SELECT COUNT(*) FROM graph g join cockpitview v on (g.view = v.cvid) WHERE v.owner=u.uid) AS graphCount
+                                                   (SELECT COUNT(*) FROM graph g WHERE g.owner=u.uid) AS graphCount
                                                 FROM user AS u');
       $stmt->execute();
       $result = $stmt->fetchAll();	
@@ -309,7 +309,7 @@ class piCloudHandler {
      
       // prepare SQL statement, execute it, fetch results into an array and return that
       $stmt = $this->mysqlConnection->prepare('SELECT v.name, u.username, 
-                                                   (SELECT count(*) from graph g where g.view=v.cvid) as assignedGraphs
+                                                   (SELECT count(*) from graph2view g2v where g2v.view=v.cvid) as assignedGraphs
                                                 FROM cockpitview v
                                                 JOIN user u on (v.owner = u.uid)');
       $stmt->execute();
@@ -325,7 +325,7 @@ class piCloudHandler {
                                                    (SELECT COUNT(*) FROM device d WHERE d.owner=u.uid) AS deviceCount,
                                                    (SELECT COUNT(*) FROM sensor s join device d on (s.attached = d.did) WHERE d.owner=u.uid) AS sensorCount,
                                                    (SELECT COUNT(*) FROM cockpitview v where v.owner=u.uid) AS viewCount,
-                                                   (SELECT COUNT(*) FROM graph g join cockpitview v on (g.view = v.cvid) WHERE v.owner=u.uid) AS graphCount
+                                                   (SELECT COUNT(*) FROM graph g WHERE g.owner=u.uid) AS graphCount
                                                 FROM user u
                                                 WHERE u.username = :username');
       $stmt->execute(array(':username' => $username ));
@@ -375,7 +375,11 @@ class piCloudHandler {
       
       // prepare SQL statement, execute it, fetch results into an array and return that
       $stmt = $this->mysqlConnection->prepare('SELECT g.name, g.dataSinceDays*24 as sinceHours 
-                                                FROM cockpitview v JOIN graph g ON (g.view = v.cvid) WHERE v.name = :viewName');
+                                                FROM cockpitview v 
+                                                JOIN graph2view g2v ON (g2v.view = v.cvid) 
+                                                JOIN graph g ON (g2v.graph = g.gid) 
+                                                WHERE v.name = :viewName');
+                                                
       $stmt->execute(array(':viewName' => $dashboardName ));
       $result = $stmt->fetchAll();	
       return $result;
@@ -410,7 +414,7 @@ class piCloudHandler {
    function getSensorsForGraph($graphId){
       
       // prepare SQL statement, execute it, fetch results into an array and return that
-      $stmt = $this->mysqlConnection->prepare('SELECT s.identifier as sid, s.name as sensorName , d.identifier as did, d.name as deviceName
+      $stmt = $this->mysqlConnection->prepare('SELECT s.identifier as sid, s.name as sensorName, d.identifier as did, d.name as deviceName
                                                    FROM sensor s join sensor2graph s2g on (s.sid = s2g.sensor) 
                                                    JOIN device d on (d.did = s.attached) 
                                                    WHERE s2g.graph = :graphID ');
@@ -462,10 +466,10 @@ class piCloudHandler {
    function createNewGraph($username, $graphname, $timeframe, $sensors){
        
       // prepare SQL statement
-      $stmt = $this->mysqlConnection->prepare('INSERT INTO graph ( name, dataSinceDays, view ) VALUES ( :name, :time, null )');
-     
+      $stmt = $this->mysqlConnection->prepare('INSERT INTO graph (name,dataSinceDays,owner) SELECT :name, :time, uid FROM user WHERE username = :user');
+                    
       // execute the select statmenet and bind variables
-      $stmt->execute(array(':name' => $graphname, ':time' => $timeframe));
+      $stmt->execute(array(':name' => $graphname, ':time' => $timeframe, ':user' => $username));
       
       // get the last inserted id
       $id = $this->mysqlConnection->lastInsertId();
