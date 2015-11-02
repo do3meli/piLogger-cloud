@@ -440,6 +440,56 @@ class piCloudHandler {
       // return true if we come up here
       return $stmt; 
    }
+   
+   // function to get all graphs from mysql database for a specific user
+   function getAllSensorsForUser($username){
+     
+      // prepare SQL statement
+      $stmt = $this->mysqlConnection->prepare('SELECT s.sid, s.name, d.name as devName from sensor s 
+                                                join device d on (s.attached = d.did) 
+                                                join user u on (d.owner = u.uid) 
+                                                where u.username = :user');
+     
+      // execute the select statmenet and bind variables
+      $stmt->execute(array(':user' => $username));
+      
+      // fetch all rows and return an array
+      $result = $stmt->fetchAll();	
+      return $result;
+   }  
+   
+   // function to create a new graph for a user
+   function createNewGraph($username, $graphname, $timeframe, $sensors){
+       
+      // prepare SQL statement
+      $stmt = $this->mysqlConnection->prepare('INSERT INTO graph ( name, dataSinceDays, view ) VALUES ( :name, :time, null )');
+     
+      // execute the select statmenet and bind variables
+      $stmt->execute(array(':name' => $graphname, ':time' => $timeframe));
+      
+      // get the last inserted id
+      $id = $this->mysqlConnection->lastInsertId();
+      
+      // only go ahead if that is a number higher than 0
+      if($id > 0){
+        
+            // prepare query for sensor inserts
+            $stmt = $this->mysqlConnection->prepare('INSERT INTO sensor2graph ( sensor, graph ) VALUES ( :sensor, :graph )');
+      
+            // loop over all sensors
+            foreach($sensors as $sensor){
+                $stmt->execute(array(':sensor' => $sensor, ':graph' => $id));
+            }
+            
+            return true;
+
+      }else{
+          // something went wrong return false
+          return false;
+      } 
+         
+   }
+
  
 }
 

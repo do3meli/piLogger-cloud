@@ -24,6 +24,7 @@ class Acl extends ZendAcl {
         $this->addResource('/dashboards/:id');
         $this->addResource('/graphs');
         $this->addResource('/graphs/:id');
+        $this->addResource('/graphs/new');
         $this->addResource('/devices');
         $this->addResource('/devices/:id');
         $this->addResource('/sensors');
@@ -31,6 +32,7 @@ class Acl extends ZendAcl {
         $this->addResource('/users');
         $this->addResource('/users/:username');
         $this->addResource('/register');
+        
 
         // APPLICATION PERMISSIONS
         // Now we allow or deny a role's access to resources. The third argument
@@ -49,6 +51,7 @@ class Acl extends ZendAcl {
         $this->allow('guest', '/users', 'GET');
         $this->allow('guest', '/users/:username', 'GET');
         $this->allow('guest', '/register', array('GET', 'POST'));
+        $this->allow('member', '/graphs/new', array('GET', 'POST'));
 
         // This allows admin access to everything
         $this->allow('admin');

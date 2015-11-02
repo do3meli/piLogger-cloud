@@ -133,6 +133,35 @@ $app->get('/dashboards/:id', function ($id) use ($app) {
    ]);
 });
 
+$app->map('/graphs/new', function () use ($app) {
+    
+    $username = $app->auth->getIdentity()['username'];
+    
+    // if a post has been submitted call the db insert function
+    if ($app->request()->isPost()) {
+       
+        // get post values
+        $graphname = $app->request->post('graphname');
+        $timeframe = $app->request->post('timeframe');
+        $sensors = $app->request->post('sensors');
+        
+        // save new graph and keep return value
+        $result = $app->config('picloud')->createNewGraph($username, $graphname, $timeframe, $sensors);
+        
+        if($result){
+            $app->flashNow('success', 'Graph successfully created');
+            $app->log->info('successfully created new graph "'.$graphname.'" for '.$username);
+        }else{
+            $app->flashNow('error', 'Error - Could not create your graph'); 
+            $app->log->error('failed to created new graph "'.$graphname.'" for '.$username);
+        }        
+    }
+    
+    // render the page
+    $app->render('graphs_add.html',['usergraphs' => $app->config('picloud')->getAllSensorsForUser($username)]);
+    
+})->via('GET', 'POST');
+
 $app->get('/graphs', function () use ($app) {
     $app->render('graphs.html',['graphs' => $app->config('picloud')->getAllGraphs()]);
 });
