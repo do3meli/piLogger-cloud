@@ -122,6 +122,34 @@ $app->get('/', function () use ($app) {
     $app->render('index.html');
 });
 
+$app->map('/dashboards/new', function () use ($app) {
+    
+    $username = $app->auth->getIdentity()['username'];
+    
+    // if a post has been submitted call the db insert function
+    if ($app->request()->isPost()) {
+       
+        // get post values
+        $viewname = $app->request->post('viewname');
+        $graphs = $app->request->post('graphs');
+        
+        // save new graph and keep return value
+        $result = $app->config('picloud')->createNewDashboard($username, $viewname, $graphs);
+        
+        if($result){
+            $app->flashNow('success', 'Graph successfully created');
+            $app->log->info('successfully created new dashboard "'.$viewname.'" for '.$username);
+        }else{
+            $app->flashNow('error', 'Error - Could not create your graph'); 
+            $app->log->error('failed to created new dashboard "'.$viewname.'" for '.$username);
+        }        
+    }
+    
+    // render the page
+    $app->render('dashboards_add.html',['usergraphs' => $app->config('picloud')->getAllGraphsForUser($username)]);
+    
+})->via('GET', 'POST');
+
 $app->get('/dashboards', function () use ($app) {
     $app->render('dashboards.html',['dashboards' => $app->config('picloud')->getAllViews()]);
 });

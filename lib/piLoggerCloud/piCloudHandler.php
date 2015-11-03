@@ -495,6 +495,52 @@ class piCloudHandler {
          
    }
 
+   // function to get all dashboards from mysql database for a specific user
+   function getAllGraphsForUser($username){
+     
+      // prepare SQL statement
+      $stmt = $this->mysqlConnection->prepare('SELECT g.gid, g.name FROM graph g JOIN user u ON (g.owner = u.uid) WHERE u.username = :user');
+     
+      // execute the select statmenet and bind variables
+      $stmt->execute(array(':user' => $username));
+      
+      // fetch all rows and return an array
+      $result = $stmt->fetchAll();	
+      return $result;
+   }  
+
+
+   // function to create a new dashboard for a user
+   function createNewDashboard($username, $viewname, $graphs){
+       
+      // prepare SQL statement
+      $stmt = $this->mysqlConnection->prepare('INSERT INTO cockpitview (name,owner) SELECT :name, uid FROM user WHERE username = :user');
+                    
+      // execute the select statmenet and bind variables
+      $stmt->execute(array(':name' => $viewname, ':user' => $username));
+      
+      // get the last inserted id
+      $id = $this->mysqlConnection->lastInsertId();
+      
+      // only go ahead if that is a number higher than 0
+      if($id > 0){
+        
+            // prepare query for sensor inserts
+            $stmt = $this->mysqlConnection->prepare('INSERT INTO graph2view ( graph, view ) VALUES ( :graph, :view )');
+      
+            // loop over all sensors
+            foreach($graphs as $graph){
+                $stmt->execute(array(':graph' => $graph, ':view' => $id));
+            }
+            
+            return true;
+
+      }else{
+          // something went wrong return false
+          return false;
+      } 
+         
+   }
  
 }
 

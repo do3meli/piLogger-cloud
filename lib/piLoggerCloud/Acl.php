@@ -22,6 +22,7 @@ class Acl extends ZendAcl {
         $this->addResource('/logout');
         $this->addResource('/dashboards');
         $this->addResource('/dashboards/:id');
+        $this->addResource('/dashboards/new');
         $this->addResource('/graphs');
         $this->addResource('/graphs/:id');
         $this->addResource('/graphs/new');
@@ -52,6 +53,7 @@ class Acl extends ZendAcl {
         $this->allow('guest', '/users/:username', 'GET');
         $this->allow('guest', '/register', array('GET', 'POST'));
         $this->allow('member', '/graphs/new', array('GET', 'POST'));
+        $this->allow('member', '/dashboards/new', array('GET', 'POST'));
 
         // This allows admin access to everything
         $this->allow('admin');
