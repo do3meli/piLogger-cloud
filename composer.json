@@ -9,18 +9,12 @@
             "email": "dominic.schlegel@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/do3meli/slim-auth/"
-        }
-    ],
     "require": {
         "slim/slim": "^2.6",
         "dogancelik/slim-json": "dev-master",
         "twig/twig": "1.*",
         "slim/views": "dev-master",
-        "jeremykendall/slim-auth": "dev-fix-PDO-identity",
+        "jeremykendall/slim-auth": "dev-master",
         "datastax/php-driver": "dev-master",
         "nesbot/carbon": "dev-master",
         "monolog/monolog": "^1.16@dev",
