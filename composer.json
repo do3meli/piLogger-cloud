@@ -14,7 +14,7 @@
         "dogancelik/slim-json": "dev-master",
         "twig/twig": "1.*",
         "slim/views": "dev-master",
-        "jeremykendall/slim-auth": "dev-develop",
+        "jeremykendall/slim-auth": "dev-slim-2.x",
         "datastax/php-driver": "dev-master",
         "nesbot/carbon": "dev-master",
         "monolog/monolog": "^1.16@dev",
