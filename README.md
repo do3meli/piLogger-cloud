@@ -1,7 +1,7 @@
-#piLogger-cloud
+# piLogger-cloud
 piLogger-cloud is a web based cloud application that enables you to store, analyze and visualize data measurements. 
 
-##Package Installation
+## Package Installation
 The source code can be installed on any *NIX system by executing the following steps:
 
 1. fetch the code from github: `git clone https://github.com/do3meli/piLogger-cloud.git`
@@ -9,7 +9,7 @@ The source code can be installed on any *NIX system by executing the following s
 3. install all dependencies via composer: `composer install`
 4. follow the [Server Installation Manual](https://github.com/do3meli/piLogger-cloud/wiki/Server-Installation-Manual) and setup your system correspondingly
 
-##Credits and Dependencies
+## Credits and Dependencies
 The following other projects or libraries were used:
 
 * [startbootstrap-sb-admin-2](https://github.com/IronSummitMedia/startbootstrap-sb-admin-2) a free, open source, bootstrap admin theme
